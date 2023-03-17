@@ -132,4 +132,21 @@ export function useSelectHints() {
       compId.current = null;
     });
   }, []);
+
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      function (event) {
+        // Remove the previous visual hint overlay
+        clearOverlay();
+        // Added a new visual hint overlay
+        topLineHoverId.current = getId();
+        rightLineHoverId.current = getId();
+        bottomLineHoverId.current = getId();
+        leftLineHoverId.current = getId();
+        renderFn();
+      },
+      true
+    );
+  }, []);
 }
