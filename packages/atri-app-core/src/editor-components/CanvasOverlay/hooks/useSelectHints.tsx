@@ -136,7 +136,7 @@ export function useSelectHints() {
   useEffect(() => {
     window.addEventListener(
       "resize",
-      function (event) {
+      () => {
         // Remove the previous visual hint overlay
         clearOverlay();
         // Added a new visual hint overlay
