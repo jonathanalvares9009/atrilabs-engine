@@ -151,6 +151,9 @@ export function useSelectHints() {
     return subscribeCanvasMachine(
       "COMPONENT_RENDERED_AFTER_PROPS_UPDATE",
       (context, event) => {
+        if (topLineHoverId !== null) {
+          clearOverlay();
+        }
         // @ts-ignore
         if (compId.current === event.compId) {
           topLineHoverId.current = getId();
