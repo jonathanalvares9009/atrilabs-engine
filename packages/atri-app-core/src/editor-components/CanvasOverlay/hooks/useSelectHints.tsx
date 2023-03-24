@@ -146,4 +146,20 @@ export function useSelectHints() {
       true
     );
   }, []);
+
+  useEffect(() => {
+    return subscribeCanvasMachine(
+      "COMPONENT_RENDERED_AFTER_PROPS_UPDATE",
+      (context, event) => {
+        // @ts-ignore
+        if (compId.current === event.compId) {
+          topLineHoverId.current = getId();
+          rightLineHoverId.current = getId();
+          bottomLineHoverId.current = getId();
+          leftLineHoverId.current = getId();
+          renderFn();
+        }
+      }
+    );
+  }, []);
 }

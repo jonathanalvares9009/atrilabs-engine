@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { canvasApi, componentStoreApi } from "../../api";
+import {
+  canvasApi,
+  componentStoreApi,
+  canvasMachineInterpreter,
+} from "../../api";
 
 export function usePropsUpdated(props: { id: string }) {
   const [compProps, setCompProps] = useState<any>();
@@ -8,5 +12,12 @@ export function usePropsUpdated(props: { id: string }) {
       setCompProps(componentStoreApi.getComponentProps(props.id));
     });
   }, []);
+  useEffect(() => {
+    if (compProps !== undefined)
+      canvasMachineInterpreter.send({
+        type: "COMPONENT_RENDERED_AFTER_PROPS_UPDATE",
+        compId: props.id,
+      });
+  }, [compProps]);
   return compProps;
 }

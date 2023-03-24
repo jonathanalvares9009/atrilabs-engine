@@ -30,6 +30,8 @@ const PROGRAMTIC_HOVER = "PROGRAMTIC_HOVER" as const;
 const PROGRAMTIC_SELECT = "PROGRAMTIC_SELECT" as const;
 const DROP_ZONE_CREATED = "DROP_ZONE_CREATED" as const;
 const DROP_ZONE_DESTROYED = "DROP_ZONE_DESTROYED" as const;
+const COMPONENT_RENDERED_AFTER_PROPS_UPDATED =
+  "COMPONENT_RENDERED_AFTER_PROPS_UPDATE" as const;
 
 type IFRAME_DETECTED_EVENT = { type: typeof IFRAME_DETECTED };
 type TOP_WINDOW_DETECTED_EVENT = { type: typeof TOP_WINDOW_DETECTED };
@@ -92,6 +94,10 @@ type PROPS_UPDATED_EVENT = {
   type: typeof PROPS_UPDATED;
   compId: string;
 };
+type COMPONENT_RENDERED_AFTER_PROPS_UPDATED_EVENT = {
+  type: typeof COMPONENT_RENDERED_AFTER_PROPS_UPDATED;
+  compId: string;
+};
 type KEY_UP_EVENT = {
   type: typeof KEY_UP;
   event: KeyboardEvent;
@@ -127,6 +133,7 @@ type CanvasMachineEvent =
   | COMPONENT_DELETED_EVENT
   | COMPONENT_REWIRED_EVENT
   | PROPS_UPDATED_EVENT
+  | COMPONENT_RENDERED_AFTER_PROPS_UPDATED_EVENT
   | KEY_UP_EVENT
   | KEY_DOWN_EVENT
   | PROGRAMTIC_HOVER_EVENT
@@ -431,6 +438,7 @@ type SubscribeStates =
   | typeof COMPONENT_DELETED
   | typeof COMPONENT_REWIRED
   | typeof PROPS_UPDATED
+  | typeof COMPONENT_RENDERED_AFTER_PROPS_UPDATED
   | typeof KEY_UP
   | typeof KEY_DOWN
   | "hoverWhileSelected"
@@ -461,6 +469,7 @@ export function createCanvasMachine(id: string) {
     [COMPONENT_DELETED]: [],
     [COMPONENT_REWIRED]: [],
     [PROPS_UPDATED]: [],
+    [COMPONENT_RENDERED_AFTER_PROPS_UPDATED]: [],
     [KEY_UP]: [],
     [KEY_DOWN]: [],
     hoverWhileSelected: [],
@@ -805,6 +814,9 @@ export function createCanvasMachine(id: string) {
             [PROPS_UPDATED]: {
               actions: ["emitPropsUpdated"],
             },
+            [COMPONENT_RENDERED_AFTER_PROPS_UPDATED]: {
+              actions: ["emitComponentRenderedAfterPropsUpdated"],
+            },
             [COMPONENT_RENDERED]: [
               {
                 target: `#${id}.${ready}.${selected}`,
@@ -951,6 +963,9 @@ export function createCanvasMachine(id: string) {
         emitComponentDeleted: callSubscribersFromAction(COMPONENT_DELETED),
         emitComponentRewired: callSubscribersFromAction(COMPONENT_REWIRED),
         emitPropsUpdated: callSubscribersFromAction(PROPS_UPDATED),
+        emitComponentRenderedAfterPropsUpdated: callSubscribersFromAction(
+          COMPONENT_RENDERED_AFTER_PROPS_UPDATED
+        ),
         emitKeyUp: callSubscribersFromAction(KEY_UP),
         emitKeyDown: callSubscribersFromAction(KEY_DOWN),
         setEverythingToNull,
