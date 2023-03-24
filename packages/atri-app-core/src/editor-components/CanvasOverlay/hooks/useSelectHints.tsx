@@ -137,9 +137,6 @@ export function useSelectHints() {
     window.addEventListener(
       "resize",
       () => {
-        // Remove the previous visual hint overlay
-        clearOverlay();
-        // Added a new visual hint overlay
         topLineHoverId.current = getId();
         rightLineHoverId.current = getId();
         bottomLineHoverId.current = getId();
