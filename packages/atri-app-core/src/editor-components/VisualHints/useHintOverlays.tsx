@@ -10,8 +10,9 @@ export const useHintOverlays = (canvasZoneId: string) => {
   const [hintNodes, setHintNodes] = useState<React.ReactNode[]>([]);
 
   const setNodesCb = useCallback(() => {
+    console.log("setNodesCb function ran");
     const hintOverlays = getHintOverlays();
-    const hintHoverlayIds = getHintOverlayIds(canvasZoneId);
+    const hintHoverlayIds = Array.from(getHintOverlayIds(canvasZoneId));
     const hintNodes = hintHoverlayIds.map((hoverlayId) => {
       const hintOverlay = hintOverlays[hoverlayId];
       return (
@@ -28,6 +29,7 @@ export const useHintOverlays = (canvasZoneId: string) => {
   }, [canvasZoneId]);
 
   useEffect(() => {
+    console.log("setNodesCb when an overlay ds changes");
     // set nodes whenever a overlay data structure is changed
     subscribeHintOverlay(canvasZoneId, () => {
       setNodesCb();
@@ -35,6 +37,7 @@ export const useHintOverlays = (canvasZoneId: string) => {
   }, [setNodesCb, canvasZoneId]);
 
   useEffect(() => {
+    console.log("setNodesCb when screen dimension changes");
     // set nodes whenever dimension of screen changes
     setNodesCb();
   }, [setNodesCb]);

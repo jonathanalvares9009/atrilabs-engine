@@ -16,6 +16,7 @@ export function NormalComponentRenderer(props: NormalComponentRendererProps) {
   useAssignComponentId({ id: props.id });
   useFocusComponent({ id: props.id });
   useHasComponentRendered({ id: props.id });
+  console.log("Before propsUpdated", props.id, JSON.stringify(compProps));
   usePropsUpdated({ id: props.id });
   return <Comp {...compProps} ref={ref} {...callbacks} />;
 }

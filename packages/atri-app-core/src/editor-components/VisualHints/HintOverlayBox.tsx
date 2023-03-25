@@ -59,6 +59,12 @@ export const HintOverlayBox: React.FC<HintOverlay & { scale: number }> = (
         (currRef) => currRef.current !== null && currRef.current !== undefined
       )
       .map((currRef) => {
+        console.log(
+          "HintOverlayBox propsUpdated: ",
+          props.compId,
+          currRef.current,
+          JSON.stringify(getCSSBoxCoords(currRef.current!))
+        );
         return getCSSBoxCoords(currRef.current!);
       });
     return { ...calculateBoxDimensions(props), compCoordsArray };
@@ -82,7 +88,12 @@ export const HintOverlayBox: React.FC<HintOverlay & { scale: number }> = (
 
       return { top, left, width, height };
     });
-  }, [box, canvasZoneCoords, props.scale]);
+  }, [
+    box.dimension.width,
+    box.dimension.height,
+    canvasZoneCoords,
+    props.scale,
+  ]);
 
   return (
     <React.Fragment>

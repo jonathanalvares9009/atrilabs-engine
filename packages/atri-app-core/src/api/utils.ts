@@ -9,6 +9,7 @@ import { manifestRegistryController } from "@atrilabs/manifest-registry";
 export function getCSSBoxCoords(elem: Element): ComponentCoordsWM {
   // crossbrowser version
   var box = elem.getBoundingClientRect();
+  console.log("HintOverlayBox getCSSBox: ", elem, elem.getBoundingClientRect());
 
   var body = document.body;
   var docEl = document.documentElement;

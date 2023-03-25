@@ -18,6 +18,7 @@ export function usePropsUpdated(props: { id: string }) {
         type: "COMPONENT_RENDERED_AFTER_PROPS_UPDATE",
         compId: props.id,
       });
+    console.log("After propsUpdated", props.id, JSON.stringify(compProps));
   }, [compProps]);
   return compProps;
 }
